@@ -80,7 +80,7 @@ get '/do_login' do
   username = params[:username]
   password = params[:password]
   if User.login(username, password)
-    redirect '/congratulation'
+    redirect '/tasks'
   else
     'user not login!'
   end
