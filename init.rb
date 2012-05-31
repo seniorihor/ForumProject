@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+# Author: seniorihor (c) 2012
 
 require 'sinatra'
 require 'sinatra/reloader'
-require 'haml'
 require 'data_mapper'
 
 
@@ -11,7 +11,16 @@ DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/db/forum.db")
 
 
 class User
+
   include DataMapper::Resource
+
+  def initialize(params)
+    self.username = params[:username]
+    self.email    = params[:email]
+    self.password = params[:password]
+    self.save
+  end
+
 
   property :id,       Serial
   property :username, String, required: true, unique: true, length: 2..20
@@ -20,16 +29,8 @@ class User
 
   has n,   :tasks
 
-  def self.register(username, email, password)
-    user = User.new
-    user.username = username
-    user.email    = email
-    user.password = password
-    user.save
-  end
-
   def self.login(username, password)
-    user = User.get(1)
+    user = self.get(1) # Fix it
     false if user.nil?
     password == user.password ? true : false
   end
@@ -40,6 +41,14 @@ class Task
 
   include DataMapper::Resource
 
+  def initialize(params)
+    self.title    = params[:title]
+    self.body     = params[:body]
+    self.priority = params[:priority]
+    self.user_id  = params[:user_id]
+    self.save
+  end
+
   property   :id,         Serial
   property   :title,      String,  required: true
   property   :body,       Text,    required: true
@@ -49,26 +58,36 @@ class Task
 
   belongs_to :user
 
-  def self.show
-
+  def self.show(id)
+    #code...
   end
 
-  def self.new
-
-  end
-
-  def self.delete
-
+  def self.delete(id)
+    #code...
   end
 end
 
 DataMapper.auto_upgrade!
 
 
-# Actions
+## Actions
+# Users
 get '/' do
   @title = 'Home page'
   haml :index
+end
+
+get '/register' do
+  @title = 'Register'
+  haml :register
+end
+
+get '/do_register' do
+  if User.new(params)
+    redirect '/login'
+  else
+    'user not saved!'
+  end
 end
 
 get '/login' do
@@ -86,23 +105,30 @@ get '/do_login' do
   end
 end
 
-get '/register' do
-  @title = 'Register'
-  haml :register
+# Tasks
+get '/tasks' do
+  @title = 'Tasks'
+  haml :tasks/index
+  #@tasks = Task.all ? Task.all : nil
 end
 
-get '/do_register' do
-  username = params[:username]
-  email    = params[:email]
-  password = params[:password]
-  if User.register(username, email, password)
-    redirect '/login'
+get '/tasks/new' do
+  @title = 'Tasks | New'
+  haml :tasks/new
+end
+
+get '/tasks/do_new' do
+  if Task.new(params)
+    redirect '/tasks'
   else
-    'user not saved!'
+    'task not saved!'
   end
 end
 
-get '/tasks' do
-  @title = 'Tasks'
-  haml :tasks
+get '/tasks/show/:id' do
+  Task.show(params[:id])
+end
+
+get '/tasks/delete/:id' do
+  Task.delete(params[:id])
 end
