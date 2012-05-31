@@ -1,0 +1,15 @@
+%h1 Register to get account
+
+%form{action: '/do_register', method: 'do'}
+  Username:
+  %input{name: 'username', type: 'text'}
+  %br
+  Email:
+  %input{name: 'email',    type: 'text'}
+  %br
+  Password:
+  %input{name: 'password', type: 'text'}
+  %br
+
+  %input{type: 'submit',   value: 'Submit'}
+

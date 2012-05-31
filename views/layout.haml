@@ -1,0 +1,8 @@
+%html
+  %head
+    %title= @title
+  %body
+    = yield
+    %a{href: url('/')} Home
+    %a{href: url('/login')} Login
+    %a{href: url('/register')} Register
