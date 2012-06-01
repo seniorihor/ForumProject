@@ -1,4 +1,4 @@
-ForumProject need such gems:
+ForumProject requires such gems:
 
 require 'rubygems'
 require 'sinatra'
