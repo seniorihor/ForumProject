@@ -1,0 +1,17 @@
+%h1 Create new task:
+
+%form{action: '/tasks/do_new', method: 'do'}
+  Title:
+  %input{name: 'title',    type: 'text'}
+  %br
+  Body:
+  %input{name: 'body',     type: 'text'}
+  %br
+  Priority:
+  %input{name: 'priority', type: 'text'}
+  %br
+  User id:
+  %input{name: 'user_id',  type: 'text'}
+  %br
+
+  %input{type: 'submit',   value: 'Submit'}
