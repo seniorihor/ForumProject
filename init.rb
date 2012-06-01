@@ -25,7 +25,7 @@ require 'dm-types'
 
 # Database
 DataMapper.setup(:default, "sqlite:///#{Dir.pwd}/db/forum.db")
-
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:///#{Dir.pwd}/db/forum.db")
 
 class User
 
@@ -39,10 +39,11 @@ class User
   end
 
 
-  property :id,       Serial
-  property :username, String, required: true, unique: true, length: 2..20
-  property :email,    String, required: true, unique: true, format: :email_address
-  property :password, String, required: true, length: 6..20
+  property :id,         Serial
+  property :username,   String, required: true, unique: true, length: 2..20
+  property :email,      String, required: true, unique: true, format: :email_address
+  property :password,   String, required: true, length: 6..20
+  property :created_at, DateTime
 
   has n,   :tasks
 
@@ -80,11 +81,11 @@ class Task
   belongs_to :user
 
   def self.show(id)
-    #code...
+    self.get(id)
   end
 
   def self.delete(id)
-    #code...
+    self.get(id).destroy
   end
 end
 
@@ -148,15 +149,23 @@ get '/tasks/do_new' do
   if Task.new(params)
     redirect '/tasks'
   else
-    'task not saved!'
+    haml 'task not saved!'
     #redirect '/tasks'
   end
 end
 
 get '/tasks/show/:id' do
-  Task.show(params[:id])
+  if Task.show(params[:id])
+    haml :'tasks/show'
+  else
+    haml 'error'
+  end
 end
 
 get '/tasks/delete/:id' do
-  Task.delete(params[:id])
+  if Task.delete(params[:id])
+    redirect '/tasks'
+  else
+    haml 'error'
+  end
 end
