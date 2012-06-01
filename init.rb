@@ -145,6 +145,7 @@ get '/tasks/do_new' do
     redirect '/tasks'
   else
     'task not saved!'
+    #redirect '/tasks'
   end
 end
 
