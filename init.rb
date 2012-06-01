@@ -21,6 +21,7 @@ require 'dm-types'
 #require 'dm-transactions'
 # DataMapper plugin for serializing Resources and Collections
 #require 'dm-serializer'
+require 'dm-sqlite-adapter'
 
 
 # Database
