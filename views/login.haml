@@ -1,11 +1,11 @@
-%h1 Login to enter inside system
+%h1 Please login
 
-%form{action: '/do_login', method: 'do'}
+%form{action:  '/do_login', method: 'post'}
   Username:
-  %input{name: 'username', type: 'text'}
+  %input{name: 'username',  type:   'text'}
   %br
   Password:
-  %input{name: 'password', type: 'text'}
+  %input{name: 'password',  type:   'text'}
   %br
 
-  %input{type: 'submit',   value: 'Submit'}
+  %input{type: 'submit',    value:  'login'}

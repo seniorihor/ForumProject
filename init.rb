@@ -46,6 +46,10 @@ class User
 
   has n,   :tasks
 
+#  def save
+#    self.save
+#  end
+
   def self.login(username, password)
     user = self.get(1) # Fix it
     false if user.nil?
@@ -103,7 +107,7 @@ get '/register' do
   haml :register
 end
 
-get '/do_register' do
+post '/do_register' do
   if User.new(params) # fix it: if user not saved — must redirect to /register
     redirect '/login'
   else
@@ -117,7 +121,7 @@ get '/login' do
   haml :login
 end
 
-get '/do_login' do
+post '/do_login' do
   username = params[:username]
   password = params[:password]
   if User.login(username, password)
