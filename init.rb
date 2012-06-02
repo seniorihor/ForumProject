@@ -25,8 +25,8 @@ require 'dm-sqlite-adapter'
 
 
 # Database
-DataMapper.setup(:default, "sqlite:///#{Dir.pwd}/db/forum.db")
-#DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:///#{Dir.pwd}/db/forum.db")
+#DataMapper.setup(:default, "sqlite:///#{Dir.pwd}/db/forum.db")
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:///#{Dir.pwd}/db/forum.db")
 
 class User
 
