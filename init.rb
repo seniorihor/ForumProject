@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: seniorihor (c) 2012
 
-require 'rubygems'
+require 'bundler/setup'
+=begin require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'haml'
@@ -22,7 +23,7 @@ require 'dm-types'
 # DataMapper plugin for serializing Resources and Collections
 #require 'dm-serializer'
 require 'dm-sqlite-adapter'
-
+=end
 
 # Database
 #DataMapper.setup(:default, "sqlite:///#{Dir.pwd}/db/forum.db")
