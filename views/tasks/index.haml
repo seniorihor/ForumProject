@@ -1,13 +1,13 @@
 %h1 List of tasks:
 
-1. Test task
-%a{href: url('/tasks/show/:id')}   show
-%a{href: url('/tasks/new')}    new
-%a{href: url('/tasks/delete/:id')} delete
-%br
-
-
 - @tasks.each do |task|
-  %h3= task.title
-  %p=  task.body
+  %h3= "Title:    #{task.title}"
+  %p=  "From:     #{User.get(task.user_id).username}"
+  %p=  "Body:     #{task.body}"
+  %p=  "Priority: #{task.priority}"
+  %p=  "Read:     #{task.read}"
+  %a{href: url("/tasks/#{task.id}")}        show
+  %a{href: url("/tasks/new")}               new
+  %a{href: url("/tasks/delete/#{task.id}")} delete
+  %br
   %br
