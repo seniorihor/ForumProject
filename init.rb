@@ -91,6 +91,7 @@ class Task
   end
 end
 
+DataMapper.finalize
 DataMapper.auto_upgrade!
 
 
@@ -136,10 +137,13 @@ post '/do_login' do
 end
 
 # Tasks
+# /tasks    - all task
+# /task     - create new task
+# /task/:id - show id task
 get '/tasks' do
   @title = 'Tasks'
+  @tasks = Task.all#(order: [:id.desc], limit: 20)
   haml :'tasks/index'
-  #@tasks = Task.all ? Task.all : nil
 end
 
 get '/tasks/new' do

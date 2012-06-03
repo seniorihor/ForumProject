@@ -5,3 +5,9 @@
 %a{href: url('/tasks/new')}    new
 %a{href: url('/tasks/delete/:id')} delete
 %br
+
+
+- @tasks.each do |task|
+  %h3= task.title
+  %p=  task.body
+  %br
